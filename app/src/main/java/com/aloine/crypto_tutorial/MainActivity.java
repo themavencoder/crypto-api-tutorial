@@ -1,5 +1,6 @@
 package com.aloine.crypto_tutorial;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.aloine.crypto_tutorial.adapter.CoinAdapter;
+import com.aloine.crypto_tutorial.adapter.OnCoinClickListener;
 import com.aloine.crypto_tutorial.network.ApiService;
 import com.aloine.crypto_tutorial.network.Client;
 import com.aloine.crypto_tutorial.network.CoinProperty;
@@ -17,10 +19,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnCoinClickListener {
     private RecyclerView recyclerView;
     private CoinAdapter adapter = new CoinAdapter();
     private List<CoinProperty> mCoinList;
+    public static final String COIN_DETAILS_KEY = "com.aloine.crypto_tutorial.COIN_DETAILS_KEY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recycler_view);
         adapter.setCoins(mCoinList);
+        adapter.setOnCoinClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         getCoins();
@@ -53,5 +57,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onCoinClick(CoinProperty coinProperty) {
+        Intent intent = new Intent(this, DetailsActivity.class);
+        intent.putExtra(COIN_DETAILS_KEY,coinProperty);
+        startActivity(intent);
+
+
     }
 }

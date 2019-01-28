@@ -1,10 +1,13 @@
 package com.aloine.crypto_tutorial.network;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-    public class CoinProperty {
+    public class CoinProperty implements Parcelable {
         @SerializedName("id")
         @Expose
         private String id;
@@ -50,6 +53,36 @@ import com.google.gson.annotations.SerializedName;
         @SerializedName("last_updated")
         @Expose
         private String lastUpdated;
+
+        protected CoinProperty(Parcel in) {
+            id = in.readString();
+            name = in.readString();
+            symbol = in.readString();
+            rank = in.readString();
+            priceUsd = in.readString();
+            priceBtc = in.readString();
+            _24hVolumeUsd = in.readString();
+            marketCapUsd = in.readString();
+            availableSupply = in.readString();
+            totalSupply = in.readString();
+            maxSupply = in.readString();
+            percentChange1h = in.readString();
+            percentChange24h = in.readString();
+            percentChange7d = in.readString();
+            lastUpdated = in.readString();
+        }
+
+        public static final Creator<CoinProperty> CREATOR = new Creator<CoinProperty>() {
+            @Override
+            public CoinProperty createFromParcel(Parcel in) {
+                return new CoinProperty(in);
+            }
+
+            @Override
+            public CoinProperty[] newArray(int size) {
+                return new CoinProperty[size];
+            }
+        };
 
         public String getId() {
             return id;
@@ -171,5 +204,28 @@ import com.google.gson.annotations.SerializedName;
             this.lastUpdated = lastUpdated;
         }
 
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(id);
+            dest.writeString(name);
+            dest.writeString(symbol);
+            dest.writeString(rank);
+            dest.writeString(priceUsd);
+            dest.writeString(priceBtc);
+            dest.writeString(_24hVolumeUsd);
+            dest.writeString(marketCapUsd);
+            dest.writeString(availableSupply);
+            dest.writeString(totalSupply);
+            dest.writeString(maxSupply);
+            dest.writeString(percentChange1h);
+            dest.writeString(percentChange24h);
+            dest.writeString(percentChange7d);
+            dest.writeString(lastUpdated);
+        }
     }
 
