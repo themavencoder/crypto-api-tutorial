@@ -34,7 +34,7 @@ View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_co
 
     @Override
     public int getItemCount() {
-        return coinList.size();
+        return null != coinList ? coinList.size() : 0;
     }
 
     class CoinViewHolder extends RecyclerView.ViewHolder {
