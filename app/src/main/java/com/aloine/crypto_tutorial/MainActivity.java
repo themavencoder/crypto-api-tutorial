@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements OnCoinClickListen
 
     private void getCoins() {
         ApiService apiService = Client.getClient().create(ApiService.class);
-        Call<List<CoinProperty>> call = apiService.getCoins();
+        Call<List<CoinProperty>> call = apiService.getCoins(50);
         call.enqueue(new Callback<List<CoinProperty>>() {
             @Override
             public void onResponse(Call<List<CoinProperty>> call, Response<List<CoinProperty>> response) {
